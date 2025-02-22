@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Work Order</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #00796b;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #333;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #00796b;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #004d40;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #00796b;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Submit Work Order</h1>
+        <form id="workOrderForm">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="priority">Priority:</label>
+            <select id="priority" name="priority" required>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+
+            <label for="requester">Requester Name:</label>
+            <input type="text" id="requester" name="requester" required>
+
+            <label for="dueDate">Due Date:</label>
+            <input type="date" id="dueDate" name="dueDate" required>
+
+            <label for="technician">Assigned Technician:</label>
+            <input type="text" id="technician" name="technician" required>
+
+            <button type="submit">Submit Work Order</button>
+        </form>
+        <a href="/Regional-Maintenance-Request/dashboard.html">Go to Dashboard</a>
+    </div>
+
+    <script>
+        document.getElementById('workOrderForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const workOrder = {
+                id: Date.now(),
+                description: document.getElementById('description').value,
+                location: document.getElementById('location').value,
+                priority: document.getElementById('priority').value,
+                requester: document.getElementById('requester').value,
+                dueDate: document.getElementById('dueDate').value,
+                technician: document.getElementById('technician').value,
+                date: new Date().toLocaleString(),
+                status: 'Pending'
+            };
+            let workOrders = JSON.parse(localStorage.getItem('workOrders')) || [];
+            workOrders.push(workOrder);
+            localStorage.setItem('workOrders', JSON.stringify(workOrders));
+            this.reset();
+            window.location.href = '/Regional-Maintenance-Request/dashboard.html';
+        });
+    </script>
+</body>
+</html>
